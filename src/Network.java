@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
 
 class Network {
     public static void main(String[] args) {
