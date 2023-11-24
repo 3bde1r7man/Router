@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -18,14 +20,14 @@ class Router {
 
     public void occupyConnection(Device device) throws InterruptedException {
         if(semaphore.value <= 0){
-            System.out.println("- (" + device.getNameDevice() + ")" +"(" + device.getDeviceType() + ") arrived and waiting");
+            AppendToFile("- (" + device.getNameDevice() + ")" +"(" + device.getDeviceType() + ") arrived and waiting\n");
         }
         semaphore.P();
-        System.out.println("- (" + device.getNameDevice() + ")(" + device.getDeviceType() + ") arrived");
+        AppendToFile("- (" + device.getNameDevice() + ")(" + device.getDeviceType() + ") arrived\n");
         int connectionIndex = availableIndices.poll();
         connections.add(device);
         device.setConnection(connectionIndex);
-        System.out.println("- Connection " + connectionIndex + ": " + device.getNameDevice() + " Occupied");
+        AppendToFile("- Connection " + connectionIndex + ": " + device.getNameDevice() + " Occupied\n");
         
     }
 
@@ -38,5 +40,15 @@ class Router {
 
     public ArrayList<Device> getConnections() {
         return  connections;
+    }
+    public void AppendToFile(String text){
+        File file = new File("output.txt");
+        try {
+            FileWriter fr = new FileWriter(file, true);
+            fr.write(text);
+            fr.close();
+        } catch (Exception e) {
+            System.out.println("Error in file output");
+        }
     }
 }

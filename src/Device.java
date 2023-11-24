@@ -24,14 +24,17 @@ public class Device extends Thread {
     
     public void connect() throws InterruptedException {
         router.occupyConnection(this);
-        System.out.println("- Connection " + connection + ": " + name + " login");
+        
+        router.AppendToFile("- Connection " + connection + ": " + name + " login\n");
         Thread.sleep((long) (Math.random() * 1000));
-        System.out.println("- Connection " + connection + ": " + name + " performs online activity");
+        
+        router.AppendToFile("- Connection " + connection + ": " + name + " performs online activity\n");
         disconnect();
     }
 
     public void disconnect() {
-        System.out.println("- Connection " + connection + ": " + name + " Logged out");
+        
+        router.AppendToFile("- Connection " + connection + ": " + name + " Logged out\n");
         router.releaseConnection(this);
     }
 
